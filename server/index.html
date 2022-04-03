@@ -15,11 +15,10 @@
         <input id="Password" type="password" name="password" disabled="disabled" value="" />
     </form>
 
-
     <script>
-        window.parent.postMessage('handshake', 'http://127.0.0.1:5500');
         window.addEventListener("message", (event) => {
             if (event.origin !== "http://127.0.0.1:5500") return;
+
             const username = event.data.username;
             const password = event.data.password;
 
@@ -27,9 +26,9 @@
                 document.getElementById('Username').value = username;
                 document.getElementById('Password').value = password;
                 const signInForm = document.getElementById('SignInForm');
-                signInForm.submit();
+                console.log("post");
+                //signInForm.submit();
             }
-
         }, false);
     </script>
 </body>

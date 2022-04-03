@@ -39,11 +39,6 @@ class SignInWebCompontent extends HTMLElement {
             };
             this.sendDataToServer(this._formData);
         };
-        window.addEventListener("message", (event) => {
-            if (event.origin !== "http://127.0.0.1:5501")
-                return;
-            console.log(`message received from child`);
-        }, false);
     }
     sendDataToServer(message) {
         const childFrame = this._root.getElementById('SignInIframe');
