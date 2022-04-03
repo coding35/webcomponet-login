@@ -10,28 +10,23 @@ class SignInWebCompontent extends HTMLElement {
         <style>
             :host{}
         </style>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4">
-                    <form id="SignInForm" role="form">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">
-                                Email address
-                            </label>
-                            <input type="text" class="form-control" name="username" />
-                        </div>
-                        <div class="form-group">
-                            
-                            <label for="exampleInputPassword1">
-                                Password
-                            </label>
-                            <input type="password" class="form-control" name="password" />
-                        </div>
-                        <input type="submit" class="btn btn-primary" name="submit"/>
-                    </form>
-                </div>
+        <form id="SignInForm" role="form">
+            <div class="form-group">
+                <label for="username">
+                    Username
+                </label>
+                <input type="text" class="form-control" name="username" />
             </div>
-        </div>
+            <div class="form-group">
+                
+                <label for="password">
+                    Password
+                </label>
+                <input type="password" class="form-control" name="password" />
+            </div>
+            <input type="submit" class="btn btn-primary" name="submit"/>
+        </form>
+        <br>
         <iframe id="SignInIframe" src="http://127.0.0.1:5501" style=""></iframe>
        `;
         this._signInForm = this._root.getElementById('SignInForm');
@@ -48,7 +43,6 @@ class SignInWebCompontent extends HTMLElement {
             if (event.origin !== "http://127.0.0.1:5501")
                 return;
             console.log(`message received from child`);
-            this.sendDataToServer('acknowledged');
         }, false);
     }
     sendDataToServer(message) {
