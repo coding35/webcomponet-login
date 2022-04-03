@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    server
+    <!--     <form id="SignInForm">
+        <input type="text" name="username" />
+        <input type="text" name="password" />
+        <input id="SignInFormSubmitBtn" type="submit" name="submit" />
+    </form> -->
+
+    <script>
+        /*         const formControlArray = [];
+                                        const form = document.getElementById("SignInForm");
+                                        Array.prototype.forEach.call(form, function(item) {
+                                            formControlArray.push({
+                                                id: item.id,
+                                                type: item.type,
+                                                name: item.name
+                                            });
+                                        }); 
+
+                window.parent.postMessage(structuredClone(formControlArray), 'http://127.0.0.1:5500');*/
+        window.parent.postMessage('handshake', 'http://127.0.0.1:5500');
+
+        window.addEventListener("message", (event) => {
+            if (event.origin !== "http://127.0.0.1:5500")
+                return;
+            console.log(`message "${event.data}" received from parent`);
+        }, false);
+    </script>
+</body>
+
+</html>
