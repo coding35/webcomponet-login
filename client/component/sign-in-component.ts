@@ -20,7 +20,7 @@ class SignInWebCompontent extends HTMLElement {
                             <label for="exampleInputEmail1">
                                 Email address
                             </label>
-                            <input type="email" class="form-control" name="username" />
+                            <input type="text" class="form-control" name="username" />
                         </div>
                         <div class="form-group">
                             
@@ -37,7 +37,6 @@ class SignInWebCompontent extends HTMLElement {
         <iframe id="SignInIframe" src="http://127.0.0.1:5501" style=""></iframe>
        `;
 
-
         this._signInForm = this._root.getElementById('SignInForm') as HTMLFormElement;
         this._signInForm.onsubmit = (event: SubmitEvent) => {
             event.preventDefault();
@@ -46,31 +45,17 @@ class SignInWebCompontent extends HTMLElement {
                 username: formData.get('username'),
                 password: formData.get('password')
             }
-            this.respondToServer(this._formData);
+            this.sendDataToServer(this._formData);
         };
 
         window.addEventListener("message", (event: MessageEvent) => {
             if (event.origin !== "http://127.0.0.1:5501") return;
-            if (Array.isArray(event.data)) { // is there a way to get the type of array
-                const formControlElementArray = event.data as FormControlElement[];
-                formControlElementArray.forEach(formControlElement => {
-                    let element = <HTMLInputElement>(document.createElement('input'));
-                    if (formControlElement.id) {
-                        element.id = formControlElement.id
-                    }
-                    element.name = formControlElement.name;
-                    element.type = formControlElement.type.toString();
-
-                    this._signInForm?.append(element);
-                    this._signInForm?.append(document.createElement('br'));
-                });
-            }
             console.log(`message received from child`);
-            this.respondToServer('acknowledged');
+            this.sendDataToServer('acknowledged');
         }, false);
     }
 
-    private respondToServer(message: string): void {
+    private sendDataToServer(message: string): void {
         const childFrame = this._root.getElementById('SignInIframe') as HTMLIFrameElement;
         if (childFrame.contentWindow !== null) {
             childFrame.contentWindow.postMessage(message, 'http://127.0.0.1:5501');
